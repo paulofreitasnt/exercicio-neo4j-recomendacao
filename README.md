@@ -80,3 +80,17 @@ RETURN t2.name AS recommended,
 ORDER BY commonTags DESC
 LIMIT 10;
 ```
+
+## Recomendação com base nas músicas ouvidas por um usuário (quem ouviu essa música, também ouviu...)
+```
+MATCH (target:User {userId: "4e11f45d732f4861772b2906f81a7d384552ad12"})-[:PLAY]->(t)
+MATCH (other:User)-[:PLAY]->(t)
+WHERE other <> target
+
+MATCH (other)-[:PLAY]->(rec)
+WHERE NOT (target)-[:PLAY]->(rec)
+
+RETURN rec.name AS recommended, count(*) AS score
+ORDER BY score DESC
+LIMIT 10;
+```
