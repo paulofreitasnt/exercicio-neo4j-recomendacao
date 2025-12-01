@@ -60,5 +60,8 @@ CREATE INDEX FOR (t:Track) on t.trackId
 
 } IN TRANSACTIONS OF 1000 ROWS;
 
-CREATE INDEX FOR (u:User) on u.userId
+REATE INDEX FOR (u:User) on u.userId
 ```
+
+## Schema dos dados importados
+![](schema.png)
