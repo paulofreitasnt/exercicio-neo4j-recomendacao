@@ -56,7 +56,10 @@ CREATE INDEX FOR (t:Track) on t.trackId
 
     MATCH(t:Track{trackId:row.track_id})
 
-    MERGE(u:User{userId:row.user_id})-[:PLAY{playCount:toInteger(row.playcount)}]->(t)
+    MERGE(u:User{userId:row.user_id})
+
+    MERGE(u)-[r:PLAY]->(t)
+    SET r.playCount = toInteger(row.playcount)
 
 } IN TRANSACTIONS OF 1000 ROWS;
 
