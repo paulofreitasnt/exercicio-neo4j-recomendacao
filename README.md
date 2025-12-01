@@ -60,8 +60,20 @@ CREATE INDEX FOR (t:Track) on t.trackId
 
 } IN TRANSACTIONS OF 1000 ROWS;
 
-REATE INDEX FOR (u:User) on u.userId
+CREATE INDEX FOR (u:User) on u.userId
 ```
 
 ## Schema dos dados importados
 ![](schema.png)
+
+## Recomendação com base nas tags em comum
+
+Recomendando 10 músicas com tags semelhantes a Under the Bridge do Red Hot Chilli Peppers
+```
+MATCH (t1:Track {trackId: "TRIODZU128E078F3E2"})-[:HAS_TAG]->(tag)<-[:HAS_TAG]-(t2:Track)
+WHERE t1 <> t2
+RETURN t2.name AS recommended,
+       count(tag) AS commonTags
+ORDER BY commonTags DESC
+LIMIT 10;
+```
